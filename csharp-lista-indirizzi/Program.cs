@@ -34,14 +34,10 @@
             List<Address> addresses = new List<Address>();
             var stream = File.OpenText(path);
 
-            int i = 0;
+            stream.ReadLine();
             while (!stream.EndOfStream)
             {
                 string readfile = stream.ReadLine();
-                i++;
-
-                if (i <= 1)
-                    continue;
 
                 try
                 {
@@ -51,7 +47,7 @@
                     string street = data[2];
                     string city = data[3];
                     string province = data[4];
-                    int zip = int.Parse(data[5]);
+                    string zip = data[5];
 
                     Address a = new Address(name, surname, street, city, province, zip);
                     addresses.Add(a);
@@ -59,6 +55,7 @@
                 catch (FormatException e)
                 {
                     e = null;
+                    Console.WriteLine("Formato ZIP non conforme");
                 }
                 catch(IndexOutOfRangeException e)
                 {
