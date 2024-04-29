@@ -4,6 +4,8 @@
     {
         static void Main(string[] args)
         {
+            string path = "C:\\Users\\HP\\source\\repos\\BooleanC#\\csharp-lista-indirizzi\\csharp-lista-indirizzi\\addresses.csv";
+            string readfile = FileFunctions.ReadFile(path);
             /*
              Oggi esercitazione sui file, ossia vi chiedo di prendere dimestichezza con quanto appena visto sui file in classe,
             in particolare nel live-coding di oggi.

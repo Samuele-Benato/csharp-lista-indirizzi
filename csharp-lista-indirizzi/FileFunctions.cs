@@ -18,5 +18,11 @@ namespace csharp_lista_indirizzi
             }
             file.Close();
         }
+
+        public void ReadFile2(string path)
+        {
+            string readfile = File.ReadAllText(path);
+            Console.WriteLine(readfile);
+        }
     }
 }
