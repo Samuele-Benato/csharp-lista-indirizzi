@@ -13,6 +13,7 @@
             istanziati a partire dalla classe Indirizzo.
             Attenzione: gli ultimi 3 indirizzi presentano dei possibili “casi particolari”
             che possono accadere a questo genere di file: vi chiedo di pensarci e di gestire come meglio crediate queste casistiche.
+            Bonus: iterare la lista di indirizzi e risalvarli in un file.
             Buon Lavoro 
             */
         }
