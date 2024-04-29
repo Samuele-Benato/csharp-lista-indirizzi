@@ -5,19 +5,81 @@
         static void Main(string[] args)
         {
             string path = "C:\\Users\\HP\\source\\repos\\BooleanC#\\csharp-lista-indirizzi\\csharp-lista-indirizzi\\addresses.csv";
-            string readfile = FileFunctions.ReadFile(path);
+            string pathclone = "C:\\Users\\HP\\source\\repos\\BooleanC#\\csharp-lista-indirizzi\\csharp-lista-indirizzi\\addressesClone.csv";
             /*
-             Oggi esercitazione sui file, ossia vi chiedo di prendere dimestichezza con quanto appena visto sui file in classe,
-            in particolare nel live-coding di oggi.
-            In questo esercizio dovrete leggere un file CSV,
-            che cambia poco da quanto appena visto nel live-coding in classe,
-            e salvare tutti gli indirizzi in esso contenuti all’interno di una lista di oggetti
-            istanziati a partire dalla classe Indirizzo.
-            Attenzione: gli ultimi 3 indirizzi presentano dei possibili “casi particolari”
-            che possono accadere a questo genere di file: vi chiedo di pensarci e di gestire come meglio crediate queste casistiche.
-            Bonus: iterare la lista di indirizzi e risalvarli in un file.
-            Buon Lavoro 
+            Medoto 1 che mi legge il file e mi stampa riga per riga
+            StreamReader file = File.OpenText(path);
+            while (!file.EndOfStream)
+            {
+                string line = file.ReadLine();
+                Console.WriteLine(line);
+            }
+            file.Close();
+            
+            Metodo 2 che mi legge e stampa il file in un unica riga
+            string readfile = File.ReadAllText(path);
+            Console.WriteLine(readfile);
             */
+
+            var addresses = GetFileData(path);
+            foreach ( var address in addresses )
+            {
+                Console.WriteLine(address.ToString());
+            }
+            MakeAClone(addresses, pathclone);
+          
+        }
+        public static List<Address> GetFileData(string path)
+        {
+            List<Address> addresses = new List<Address>();
+            var stream = File.OpenText(path);
+
+            int i = 0;
+            while (!stream.EndOfStream)
+            {
+                string readfile = stream.ReadLine();
+                i++;
+
+                if (i <= 1)
+                    continue;
+
+                try
+                {
+                    var data = readfile.Split(",");
+                    string name = data[0];
+                    string surname = data[1];
+                    string street = data[2];
+                    string city = data[3];
+                    string province = data[4];
+                    int zip = int.Parse(data[5]);
+
+                    Address a = new Address(name, surname, street, city, province, zip);
+                    addresses.Add(a);
+                }
+                catch (FormatException e)
+                {
+                    e = null;
+                }
+                catch(IndexOutOfRangeException e)
+                {
+                    Console.WriteLine("Fuori range");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.GetType().FullName + " " + e.Message);
+                }
+               
+            }
+
+            stream.Dispose();
+            return addresses;
+        }
+        public static void MakeAClone(List<Address> addresses, string path)
+        {
+            using StreamWriter stream = File.CreateText(path); 
+            foreach (var address in addresses)
+                stream.WriteLine(address.ToString());
+            //stream.Dispose(); // è implicito nello using
         }
     }
 }
